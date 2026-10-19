@@ -68,11 +68,14 @@ function GavelRig({ strikeKey }: { strikeKey: number }) {
   const pivot = useRef<THREE.Group>(null);
   const tilt = useRef<THREE.Group>(null);
   const ring = useRef<THREE.Mesh>(null);
-  const start = useRef<number | null>(null);
+  // Time since the last strike, accumulated from frame deltas. The canvas clock resets to 0 whenever the
+  // frameloop pauses off-screen, so measuring against it made the gavel spin wildly on scrolling back up.
+  const elapsed = useRef(0);
+  const bob = useRef(0); // never reset, so a strike does not make the float jump
   const pointer = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    start.current = null; // restart the strike timeline
+    elapsed.current = 0; // restart the strike timeline
   }, [strikeKey]);
 
   useEffect(() => {
@@ -136,10 +139,13 @@ function GavelRig({ strikeKey }: { strikeKey: number }) {
     [wood],
   );
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (!pivot.current || !tilt.current) return;
-    if (start.current === null) start.current = state.clock.elapsedTime;
-    const t = state.clock.elapsedTime - start.current;
+    // Cap the step so a long pause (tab hidden, scrolled away) doesn't jump the animation.
+    const step = Math.min(delta, 1 / 30);
+    elapsed.current += step;
+    bob.current += step;
+    const t = elapsed.current;
 
     // Strike timeline: lift, slam onto the block, small rebound, settle into a gentle sway.
     let angle: number;
@@ -160,10 +166,10 @@ function GavelRig({ strikeKey }: { strikeKey: number }) {
     }
 
     // Parallax tilt toward the cursor.
-    const k = 1 - Math.pow(0.001, delta);
+    const k = 1 - Math.pow(0.05, step);
     tilt.current.rotation.y += (0.55 + pointer.current.x * 0.35 - tilt.current.rotation.y) * k;
     tilt.current.rotation.x += (0.06 + pointer.current.y * 0.1 - tilt.current.rotation.x) * k;
-    tilt.current.position.y = Math.sin(state.clock.elapsedTime * 0.8) * 0.06;
+    tilt.current.position.y = Math.sin(bob.current * 0.8) * 0.06;
   });
 
   return (

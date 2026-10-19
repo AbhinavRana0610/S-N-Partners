@@ -6,7 +6,7 @@ import Marquee from "./ui/Marquee";
 import ShimmerButton from "./ui/ShimmerButton";
 import BorderBeam from "./ui/BorderBeam";
 import { ArrowIcon, MailIcon, PhoneIcon, PinIcon, PracticeGlyph } from "./Icons";
-import { approach, contact, firm, intro, practiceAreas, values } from "@/lib/content";
+import { approach, contact, firm, intro, practiceAreas, values, type PracticeIcon } from "@/lib/content";
 import { ladyJustice, courthouseColumns, libraryShelves, emblemGold, gavelDark } from "@/lib/images";
 
 function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
@@ -205,21 +205,18 @@ export function PracticeAreas() {
   );
 }
 
+const stepIcons: PracticeIcon[] = ["people", "bulb", "briefcase", "scales"];
+
+// Leaf-shaped accents tucked behind the approach photo collage.
+function Leaf({ className }: { className: string }) {
+  return <span aria-hidden className={`absolute rounded-[0_100%_0_100%] ${className}`} />;
+}
+
 export function Approach() {
   return (
-    <section id="approach" className="relative overflow-hidden bg-ink py-24 text-ivory lg:py-32">
-      <Parallax amount={12} className="absolute -inset-y-[15%] inset-x-0">
-        <Image
-          src={courthouseColumns}
-          alt=""
-          fill
-          sizes="100vw"
-          placeholder="blur"
-          className="object-cover opacity-25"
-        />
-      </Parallax>
-      <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/90 to-ink/70" />
-      <div className="relative mx-auto grid max-w-7xl gap-16 px-6 lg:grid-cols-2 lg:gap-24">
+    <section id="approach" className="relative overflow-hidden bg-ink py-24 text-ivory lg:py-28">
+      <div className="pointer-events-none absolute -left-40 top-1/3 h-[480px] w-[480px] rounded-full bg-gold/10 blur-[120px]" />
+      <div className="relative mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
         <div>
           <Reveal>
             <Eyebrow light>{approach.eyebrow}</Eyebrow>
@@ -228,26 +225,50 @@ export function Approach() {
             At S&amp;N Partners, <em className="text-gold-light">{approach.heading.toLowerCase()}</em>
           </SplitHeading>
           <Reveal delay={150}>
-            <p className="mt-6 max-w-xl leading-8 text-ivory/75">{approach.text}</p>
+            <p className="mt-6 max-w-xl font-semibold leading-8 text-ivory/90">{approach.text}</p>
+          </Reveal>
+
+          <ul className="mt-8 space-y-4">
+            {approach.steps.map((step, i) => (
+              <li key={step.title}>
+                <Reveal delay={i * 100} className="flex items-start gap-4">
+                  <PracticeGlyph name={stepIcons[i]} className="mt-0.5 h-6 w-6 shrink-0 text-gold-light" />
+                  <p className="text-sm leading-6 text-ivory/75">
+                    <span className="font-semibold text-ivory">{step.title}</span> — {step.text}
+                  </p>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
+
+          <Reveal delay={200}>
+            <ShimmerButton href="#contact" className="mt-10">
+              Schedule a Consultation
+              <ArrowIcon className="h-4 w-4 transition group-hover:translate-x-1" />
+            </ShimmerButton>
           </Reveal>
         </div>
 
-        <div className="grid gap-px bg-white/10 sm:grid-cols-2">
-          {approach.steps.map((step, i) => (
-            <div key={step.title} className="bg-ink/80">
-              <Reveal delay={i * 120} className="h-full">
-                <div className="group h-full p-8 backdrop-blur-sm transition-colors duration-500 hover:bg-ink-soft">
-                  <span className="font-serif text-5xl font-semibold text-gold/80 transition-colors group-hover:text-gold-light">
-                    0{i + 1}
-                  </span>
-                  <h3 className="mt-4 font-serif text-2xl font-semibold">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-7 text-ivory/70">{step.text}</p>
-                </div>
-              </Reveal>
-            </div>
-          ))}
-        </div>
+        {/* Photo collage: one tall pill with two smaller pills stacked beside it */}
+        <Reveal delay={150} className="relative mx-auto aspect-[10/11] w-full max-w-[340px] sm:max-w-[460px] lg:mr-0">
+          <Leaf className="-left-6 bottom-[4%] h-24 w-24 rotate-12 bg-ink-soft" />
+          <Leaf className="-top-4 right-[30%] h-20 w-20 -rotate-12 bg-ink-soft" />
+          <Leaf className="-right-6 top-[44%] h-20 w-20 rotate-45 border border-gold/30" />
+          <Leaf className="-bottom-5 right-[34%] h-16 w-16 -rotate-45 bg-gold/15" />
+          <div className="absolute left-0 top-[10%] h-[80%] w-[54%] overflow-hidden rounded-full ring-1 ring-gold/30">
+            <Parallax amount={8} className="absolute -inset-y-[12%] inset-x-0">
+              <Image src={courthouseColumns} alt="Columns of a courthouse" fill sizes="(min-width: 1024px) 260px, 50vw" placeholder="blur" className="object-cover" />
+            </Parallax>
+          </div>
+          <div className="absolute right-[4%] top-0 h-[47%] w-[36%] overflow-hidden rounded-full ring-1 ring-gold/30">
+            <Image src={ladyJustice} alt="" fill sizes="180px" placeholder="blur" className="object-cover object-[30%_center]" />
+          </div>
+          <div className="absolute bottom-0 right-[4%] h-[47%] w-[36%] overflow-hidden rounded-full ring-1 ring-gold/30">
+            <Image src={gavelDark} alt="" fill sizes="180px" placeholder="blur" className="object-cover" />
+          </div>
+        </Reveal>
       </div>
+
     </section>
   );
 }
@@ -352,17 +373,20 @@ export function Contact() {
           </Reveal>
         </div>
 
-        <Reveal delay={150} className="relative min-h-[420px]">
-          <div className="absolute -right-3 -top-3 hidden h-full w-full border border-gold/50 sm:block" />
-          <div className="relative h-full min-h-[420px]">
-            <iframe
-              title="S&N Partners office location"
-              src={`https://www.google.com/maps?q=${encodeURIComponent(firm.mapQuery)}&output=embed`}
-              className="h-full min-h-[420px] w-full border-0 grayscale-[60%] transition duration-700 hover:grayscale-0"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-            <BorderBeam />
+        <Reveal delay={150} className="flex items-center justify-center lg:justify-end">
+          {/* Map takes 80% of the column in both directions */}
+          <div className="relative h-[80%] min-h-[336px] w-[80%]">
+            <div className="absolute -right-3 -top-3 hidden h-full w-full border border-gold/50 sm:block" />
+            <div className="relative h-full min-h-[336px]">
+              <iframe
+                title="S&N Partners office location"
+                src={`https://www.google.com/maps?q=${encodeURIComponent(firm.mapQuery)}&output=embed`}
+                className="h-full min-h-[336px] w-full border-0 grayscale-[60%] transition duration-700 hover:grayscale-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <BorderBeam />
+            </div>
           </div>
         </Reveal>
       </div>
