@@ -2,9 +2,9 @@
 #   pull request  -> preview deployment (URL posted in the job summary)
 #   push to main  -> production deployment
 #
-# Deploys need three repository secrets (Settings -> Secrets and variables -> Actions):
-#   VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID
-# Until they are set, the checks still run and the deploy jobs are skipped.
+# Deploys need the VERCEL_TOKEN repository secret (Settings -> Secrets and variables -> Actions).
+# Until it is set, the checks still run and the deploy jobs are skipped. The Vercel team and
+# project IDs below are identifiers, not credentials (they match .vercel/project.json).
 
 name: CI/CD
 
@@ -48,8 +48,8 @@ jobs:
     environment: preview
     env:
       RAW_VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      RAW_VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      RAW_VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_ORG_ID: team_GldmwmjV4MPr63meUmkINtPv
+      VERCEL_PROJECT_ID: prj_SUeQOQiqOHzj7nOHz9VVTAiLJbA5
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -65,13 +65,11 @@ jobs:
             echo "ready=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          # Strip stray whitespace or quotes picked up when pasting the secrets.
+          # Strip stray whitespace or quotes picked up when pasting the token.
           clean() { printf "%s" "$1" | tr -d "[:space:]\"'"; }
-          org=$(clean "$RAW_VERCEL_ORG_ID"); project=$(clean "$RAW_VERCEL_PROJECT_ID"); token=$(clean "$RAW_VERCEL_TOKEN")
+          token=$(clean "$RAW_VERCEL_TOKEN")
           echo "::add-mask::$token"
-          case "$org" in team_*) ;; *) echo "::error::VERCEL_ORG_ID should start with team_ (Vercel -> Settings -> General -> Team ID)."; exit 1 ;; esac
-          case "$project" in prj_*) ;; *) echo "::error::VERCEL_PROJECT_ID should start with prj_ (Project -> Settings -> General -> Project ID)."; exit 1 ;; esac
-          { echo "VERCEL_ORG_ID=$org"; echo "VERCEL_PROJECT_ID=$project"; echo "VERCEL_TOKEN=$token"; } >> "$GITHUB_ENV"
+          echo "VERCEL_TOKEN=$token" >> "$GITHUB_ENV"
           echo "ready=true" >> "$GITHUB_OUTPUT"
 
       - if: steps.secrets.outputs.ready == 'true'
@@ -93,8 +91,8 @@ jobs:
     environment: production
     env:
       RAW_VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      RAW_VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      RAW_VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_ORG_ID: team_GldmwmjV4MPr63meUmkINtPv
+      VERCEL_PROJECT_ID: prj_SUeQOQiqOHzj7nOHz9VVTAiLJbA5
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -110,13 +108,11 @@ jobs:
             echo "ready=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          # Strip stray whitespace or quotes picked up when pasting the secrets.
+          # Strip stray whitespace or quotes picked up when pasting the token.
           clean() { printf "%s" "$1" | tr -d "[:space:]\"'"; }
-          org=$(clean "$RAW_VERCEL_ORG_ID"); project=$(clean "$RAW_VERCEL_PROJECT_ID"); token=$(clean "$RAW_VERCEL_TOKEN")
+          token=$(clean "$RAW_VERCEL_TOKEN")
           echo "::add-mask::$token"
-          case "$org" in team_*) ;; *) echo "::error::VERCEL_ORG_ID should start with team_ (Vercel -> Settings -> General -> Team ID)."; exit 1 ;; esac
-          case "$project" in prj_*) ;; *) echo "::error::VERCEL_PROJECT_ID should start with prj_ (Project -> Settings -> General -> Project ID)."; exit 1 ;; esac
-          { echo "VERCEL_ORG_ID=$org"; echo "VERCEL_PROJECT_ID=$project"; echo "VERCEL_TOKEN=$token"; } >> "$GITHUB_ENV"
+          echo "VERCEL_TOKEN=$token" >> "$GITHUB_ENV"
           echo "ready=true" >> "$GITHUB_OUTPUT"
 
       - if: steps.secrets.outputs.ready == 'true'
