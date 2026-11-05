@@ -223,11 +223,24 @@ export default function Gavel3D() {
     return () => window.removeEventListener(STRIKE_EVENT, strike);
   }, []);
 
-  // Stop rendering frames while the hero is scrolled out of view.
+  // Stop rendering frames while the hero is scrolled out of view, and strike again each time the visitor
+  // scrolls back to it. The first strike plays on mount, so a re-strike is only armed once the hero has
+  // fully left the screen, and fires when at least half of it is visible again.
   useEffect(() => {
     const el = wrapper.current;
     if (!el) return;
-    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting));
+    let armed = false;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting);
+        if (!entry.isIntersecting) armed = true;
+        else if (armed && entry.intersectionRatio >= 0.5) {
+          armed = false;
+          setStrikeKey((k) => k + 1);
+        }
+      },
+      { threshold: [0, 0.5] },
+    );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
