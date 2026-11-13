@@ -222,7 +222,7 @@ export function Approach() {
             <Eyebrow light>{approach.eyebrow}</Eyebrow>
           </Reveal>
           <SplitHeading className="mt-5 font-serif text-4xl font-semibold leading-tight sm:text-5xl">
-            At S&amp;N Partners, <em className="text-gold-light">{approach.heading.toLowerCase()}</em>
+            At SN Partners, <em className="text-gold-light">{approach.heading.toLowerCase()}</em>
           </SplitHeading>
           <Reveal delay={150}>
             <p className="mt-6 max-w-xl font-semibold leading-8 text-ivory/90">{approach.text}</p>
@@ -363,7 +363,7 @@ export function Contact() {
                   </span>
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.25em] text-muted">{label}</p>
-                    <div className="mt-1.5 font-serif text-xl font-semibold leading-snug">{lines}</div>
+                    <div className="mt-1.5 font-sans text-lg font-medium leading-relaxed tracking-normal">{lines}</div>
                   </div>
                 </div>
               ))}
@@ -379,7 +379,7 @@ export function Contact() {
             <div className="absolute -right-3 -top-3 hidden h-full w-full border border-gold/50 sm:block" />
             <div className="relative h-full min-h-[336px]">
               <iframe
-                title="S&N Partners office location"
+                title="SN Partners office location"
                 src={`https://www.google.com/maps?q=${encodeURIComponent(firm.mapQuery)}&output=embed`}
                 className="h-full min-h-[336px] w-full border-0 grayscale-[60%] transition duration-700 hover:grayscale-0"
                 loading="lazy"

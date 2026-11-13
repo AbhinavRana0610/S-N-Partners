@@ -18,7 +18,7 @@ const Gavel3D = dynamic(() => import("./three/Gavel3D"), { ssr: false });
 const slides = [
   {
     image: heroLibrary,
-    eyebrow: "Welcome to S&N Partners",
+    eyebrow: "Welcome to SN Partners",
     lines: ["Your Rights,", "Our Advocacy."],
     text: "A full-service law firm in New Delhi, delivering high-quality legal services with professionalism, integrity and efficiency.",
   },

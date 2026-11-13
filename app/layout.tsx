@@ -16,9 +16,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "S&N Partners | Your Rights, Our Advocacy",
+  title: "SN Partners | Your Rights, Our Advocacy",
   description:
-    "S&N Partners is a full-service law firm in New Delhi practising in Dispute Resolution, Civil, Criminal, Corporate, Real Estate, Tax, Labour & Employment and more.",
+    "SN Partners is a full-service law firm in New Delhi practising in Dispute Resolution, Civil, Criminal, Corporate, Real Estate, Tax, Labour & Employment and more.",
   // The icon file convention doesn't take AVIF, so the icons are declared here. The PNG covers Safari
   // and iOS, which don't show AVIF favicons.
   icons: {

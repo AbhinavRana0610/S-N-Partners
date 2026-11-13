@@ -57,7 +57,7 @@ export default function Header() {
             <Image src={emblemGold} alt="" className="h-10 w-auto" preload />
             <span className="leading-none">
               <span className="block font-serif text-2xl font-bold tracking-wide text-ivory">
-                S&amp;N PARTNERS
+                SN PARTNERS
               </span>
               <span className="mt-1 block text-[0.6rem] uppercase tracking-[0.3em] text-gold-light">
                 {firm.tagline}

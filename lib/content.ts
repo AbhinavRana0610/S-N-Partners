@@ -1,7 +1,7 @@
 // All copy for the home page lives here so it can be edited without touching layout code.
 
 export const firm = {
-  name: "S&N Partners",
+  name: "SN Partners",
   tagline: "Your Rights, Our Advocacy",
   email: "info@snpartners.in",
   phones: ["8587018691", "9999829223"],
@@ -14,10 +14,10 @@ export const firm = {
 
 export const nav = [
   { label: "Home", href: "#top" },
-  { label: "About", href: "#about" },
+  { label: "About Us", href: "#about" },
   { label: "Practice Areas", href: "#practice" },
   { label: "Our Approach", href: "#approach" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact Us", href: "#contact" },
 ];
 
 export const values = [
@@ -37,7 +37,7 @@ export const values = [
 
 export const intro = {
   eyebrow: "Introduction",
-  heading: "Welcome to S&N Partners",
+  heading: "Welcome to SN Partners",
   lead: "A Full-Service Law Firm.",
   paragraphs: [
     "Our firm specializes in a wide range of practice areas, including Civil Law, Criminal Law, Arbitration, Dispute Resolution, Real Estate, Taxation, Labour and Employment Laws, and the Drafting of Agreements and Contracts. With a team of outstanding Advocates dedicated to upholding justice and serving our clients with integrity, we strive to make a positive impact in the legal landscape.",
@@ -96,4 +96,4 @@ export const contact = {
 };
 
 export const disclaimer =
-  "As per the rules of the Bar Council of India, S&N Partners is not permitted to solicit work or advertise. By proceeding, you acknowledge that you are seeking information about S&N Partners of your own accord and that there has been no form of solicitation, advertisement or inducement by the firm or its members. The content of this website is for informational purposes only and should not be interpreted as legal advice. Accessing this website or communicating through it does not create a lawyer–client relationship.";
+  "As per the rules of the Bar Council of India, SN Partners is not permitted to solicit work or advertise. By proceeding, you acknowledge that you are seeking information about SN Partners of your own accord and that there has been no form of solicitation, advertisement or inducement by the firm or its members. The content of this website is for informational purposes only and should not be interpreted as legal advice. Accessing this website or communicating through it does not create a lawyer–client relationship.";
