@@ -44,8 +44,9 @@ export const emblemGold: StaticImageData = {
   height: 570,
 };
 
-export const logoLight: StaticImageData = {
-  src: "/images/logo-light.avif",
-  width: 1104,
-  height: 901,
+// Crest only (cropped from logo-light.avif); the firm name is set as live text beside it.
+export const emblemLight: StaticImageData = {
+  src: "/images/emblem-light.avif",
+  width: 815,
+  height: 549,
 };

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSyncExternalStore } from "react";
 import { firm, nav, practiceAreas } from "@/lib/content";
 import { MailIcon, PhoneIcon, PinIcon } from "./Icons";
-import { logoLight } from "@/lib/images";
+import { emblemLight } from "@/lib/images";
 
 const noopSubscribe = () => () => {};
 
@@ -20,8 +20,15 @@ export default function Footer() {
     <footer className="bg-ink text-ivory/75">
       <div className="h-[3px] bg-gradient-to-r from-transparent via-gold to-transparent" />
       <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_1.4fr_1.2fr]">
-        <div>
-          <Image src={logoLight} alt={`${firm.name} — ${firm.tagline}`} className="h-36 w-auto" />
+        <div className="flex w-48 flex-col items-center text-center text-ivory">
+          <Image src={emblemLight} alt="" className="h-20 w-auto" />
+          <p className="mt-3 font-serif text-2xl font-bold tracking-wide">SN PARTNERS</p>
+          <div className="mt-1.5 flex w-full items-center gap-1.5" aria-hidden>
+            <span className="h-1.5 w-1.5 rotate-45 border border-ivory" />
+            <span className="h-px flex-1 bg-ivory" />
+            <span className="h-1.5 w-1.5 rotate-45 border border-ivory" />
+          </div>
+          <p className="mt-2 font-serif text-sm font-semibold uppercase italic tracking-[0.25em]">{firm.tagline}</p>
         </div>
 
         <div>
