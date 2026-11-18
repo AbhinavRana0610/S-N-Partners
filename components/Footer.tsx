@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useSyncExternalStore } from "react";
-import { firm, nav, practiceAreas } from "@/lib/content";
+import { firm, nav, practiceAreas, serviceSlug } from "@/lib/content";
 import { MailIcon, PhoneIcon, PinIcon } from "./Icons";
 import { emblemLight } from "@/lib/images";
 
@@ -36,9 +37,9 @@ export default function Footer() {
           <ul className="mt-5 space-y-3 text-sm">
             {nav.map((item) => (
               <li key={item.href}>
-                <a href={item.href} className="transition hover:text-gold-light">
+                <Link href={item.href} className="transition hover:text-gold-light">
                   {item.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -49,9 +50,9 @@ export default function Footer() {
           <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
             {practiceAreas.map((a) => (
               <li key={a.title}>
-                <a href="#practice" className="transition hover:text-gold-light">
+                <Link href={`/services/${serviceSlug(a.title)}`} className="transition hover:text-gold-light">
                   {a.title}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

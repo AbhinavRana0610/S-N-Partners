@@ -11,7 +11,7 @@ const labelClass = "mb-2 block text-xs font-semibold uppercase tracking-[0.2em] 
 
 // Until a mail service is connected, submitting opens the visitor's email app
 // with the enquiry pre-filled and addressed to the firm.
-export default function ContactForm() {
+export default function ContactForm({ defaultMatter = "" }: { defaultMatter?: string }) {
   const [sent, setSent] = useState(false);
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -90,7 +90,7 @@ export default function ContactForm() {
               <label htmlFor="cf-matter" className={labelClass}>
                 Practice Area
               </label>
-              <select id="cf-matter" name="matter" defaultValue="" className={fieldClass}>
+              <select id="cf-matter" name="matter" defaultValue={defaultMatter} className={fieldClass}>
                 <option value="">Select an area</option>
                 {practiceAreas.map((a) => (
                   <option key={a.title} value={a.title}>

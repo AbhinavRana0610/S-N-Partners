@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Reveal from "./Reveal";
 import SplitHeading from "./motion/SplitHeading";
 import Parallax from "./motion/Parallax";
@@ -6,10 +7,10 @@ import Marquee from "./ui/Marquee";
 import ShimmerButton from "./ui/ShimmerButton";
 import BorderBeam from "./ui/BorderBeam";
 import { ArrowIcon, MailIcon, PhoneIcon, PinIcon, PracticeGlyph } from "./Icons";
-import { approach, contact, firm, intro, practiceAreas, values, type PracticeIcon } from "@/lib/content";
+import { approach, contact, firm, intro, practiceAreas, serviceSlug, values, type PracticeIcon } from "@/lib/content";
 import { ladyJustice, courthouseColumns, libraryShelves, emblemGold, gavelDark } from "@/lib/images";
 
-function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
+export function Eyebrow({ children, light = false }: { children: React.ReactNode; light?: boolean }) {
   return (
     <p
       className={`flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.35em] ${
@@ -179,7 +180,10 @@ export function PracticeAreas() {
             {practiceAreas.map((area, i) => (
               <li key={area.title} className="border-b border-ink/15">
                 <Reveal delay={(i % 4) * 60}>
-                  <div className="group relative grid grid-cols-[auto_1fr] items-start gap-x-5 gap-y-2 py-6 transition-colors duration-500 hover:bg-paper sm:grid-cols-[3rem_auto_1fr] sm:items-center sm:gap-x-6 sm:px-4 md:grid-cols-[3rem_auto_minmax(0,14rem)_1fr]">
+                  <Link
+                    href={`/services/${serviceSlug(area.title)}`}
+                    className="group relative grid grid-cols-[auto_1fr] items-start gap-x-5 gap-y-2 py-6 transition-colors duration-500 hover:bg-paper sm:grid-cols-[3rem_auto_1fr] sm:items-center sm:gap-x-6 sm:px-4 md:grid-cols-[3rem_auto_minmax(0,14rem)_1fr]"
+                  >
                     <span className="hidden font-serif text-lg italic text-gold sm:block">
                       {String(i + 1).padStart(2, "0")}
                     </span>
@@ -194,7 +198,7 @@ export function PracticeAreas() {
                       {area.text}
                     </p>
                     <span className="absolute bottom-[-1px] left-0 h-px w-0 bg-gold transition-all duration-500 group-hover:w-full" />
-                  </div>
+                  </Link>
                 </Reveal>
               </li>
             ))}

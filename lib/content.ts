@@ -12,13 +12,13 @@ export const firm = {
   mapQuery: "Central Lane, Babar Road, Bengali Market, New Delhi 110001",
 };
 
-export const nav = [
-  { label: "Home", href: "#top" },
-  { label: "About Us", href: "#about" },
-  { label: "Practice Areas", href: "#practice" },
-  { label: "Our Approach", href: "#approach" },
-  { label: "Contact Us", href: "#contact" },
-];
+// URL slug for a service page, e.g. "Labour & Employment" -> "labour-and-employment".
+export const serviceSlug = (title: string) =>
+  title
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 
 export const values = [
   {
@@ -74,6 +74,21 @@ export const practiceAreas: { title: string; text: string; icon: PracticeIcon }[
   { title: "Real Estate", icon: "building", text: "Title due diligence, property transactions, leases and property disputes." },
   { title: "Tax", icon: "receipt", text: "Direct and indirect tax advisory, assessments and tax litigation." },
   { title: "Technology", icon: "chip", text: "Legal support on technology contracts, data and digital businesses." },
+];
+
+export type NavItem = { label: string; href: string; children?: { label: string; href: string }[] };
+
+// Links point at "/#section" so they also work from the service pages.
+export const nav: NavItem[] = [
+  { label: "Home", href: "/#top" },
+  { label: "About Us", href: "/#about" },
+  {
+    label: "Services",
+    href: "/#practice",
+    children: practiceAreas.map((a) => ({ label: a.title, href: `/services/${serviceSlug(a.title)}` })),
+  },
+  { label: "Our Approach", href: "/#approach" },
+  { label: "Contact Us", href: "/#contact" },
 ];
 
 export const approach = {

@@ -26,6 +26,12 @@ export const PhoneIcon = (p: IconProps) => (
   </Svg>
 );
 
+export const ChevronDownIcon = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="m6 9 6 6 6-6" />
+  </Svg>
+);
+
 export const MailIcon = (p: IconProps) => (
   <Svg {...p}>
     <rect x="2" y="4" width="20" height="16" rx="2" />
