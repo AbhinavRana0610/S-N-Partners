@@ -84,6 +84,13 @@ body {
   }
 }
 
+/* Slow rotation for the circular text badge on service pages */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-kenburns,
   .motion-safe-only {

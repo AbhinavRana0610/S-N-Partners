@@ -9,6 +9,29 @@ import { emblemLight } from "@/lib/images";
 
 const noopSubscribe = () => () => {};
 
+// The footer moves Corporate / Commercial to the end so its two-line title doesn't break the grid.
+// Tax and Technology take its earlier places.
+const footerTitles = [
+  "Dispute Resolution",
+  "Civil",
+  "Criminal",
+  "Tax",
+  "Matrimonial",
+  "Banking and Finance",
+  "Competition / Antitrust",
+  "Intellectual Property",
+  "Labour & Employment",
+  "Private Client",
+  "Real Estate",
+  "Technology",
+  "Corporate / Commercial",
+];
+const footerAreas = [
+  ...footerTitles.flatMap((t) => practiceAreas.filter((a) => a.title === t)),
+  // Any practice area added later still shows up.
+  ...practiceAreas.filter((a) => !footerTitles.includes(a.title)),
+];
+
 export default function Footer() {
   // The page is prerendered, so the current year is read on the client.
   const year = useSyncExternalStore(
@@ -42,13 +65,18 @@ export default function Footer() {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link href="/locations" className="transition hover:text-gold-light">
+                Our Locations
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
           <h3 className="font-serif text-xl font-semibold text-ivory">Practice Areas</h3>
           <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
-            {practiceAreas.map((a) => (
+            {footerAreas.map((a) => (
               <li key={a.title}>
                 <Link href={`/services/${serviceSlug(a.title)}`} className="transition hover:text-gold-light">
                   {a.title}

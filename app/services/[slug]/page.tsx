@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { CallToAction } from "@/components/Sections";
 import {
+  OfferingsTicker,
   OtherServices,
   ServiceFaqs,
   ServiceHero,
@@ -39,6 +40,7 @@ async function ServiceContent({ params }: Pick<PageProps<"/services/[slug]">, "p
   return (
     <>
       <ServiceHero service={service} />
+      <OfferingsTicker service={service} />
       <ServiceOverview service={service} />
       <ServiceOfferings service={service} />
       <ServiceProcess />
